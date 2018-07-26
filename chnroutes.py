@@ -33,8 +33,8 @@ ip -batch - <<EOF
     downfile.write(downscript_header)
 
     for ip, _, mask in results:
-        upfile.write('route add %s/%s $OLDGW\n' % (ip, mask))
-        downfile.write('route del %s/%s\n' % (ip, mask))
+        upfile.write('route add %s/%s $OLDGW table 10\n' % (ip, mask))
+        downfile.write('route del %s/%s table 10\n' % (ip, mask))
 
     upfile.write('EOF\n')
     downfile.write('EOF\n')
@@ -42,8 +42,8 @@ ip -batch - <<EOF
     upfile.close()
     downfile.close()
 
-    os.chmod('vpn-up.sh', 00755)
-    os.chmod('vpn-down.sh', 00755)
+    # os.chmod('vpn-up.sh', 00755)
+    # os.chmod('vpn-down.sh', 00755)
 
 def generate_old(metric):
     results = fetch_ip_data()
